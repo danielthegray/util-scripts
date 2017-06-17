@@ -28,7 +28,7 @@ fi
 # Restart transmission UI
 transmission_pid=`ps aux | awk '/transmission/ && !/awk/{print $2}'`
 kill $transmission_pid
-while [[ -n $transmission_pid ]] ; do
+while [[ -n "$transmission_pid" ]] ; do
 	sleep 1
 	transmission_pid=`ps aux | awk '/transmission/ && !/awk/{print $2}'`
 done
