@@ -23,13 +23,13 @@ config_file=`echo ~/.config/transmission/settings.json`
 ip_in_config=`awk 'BEGIN{FS="\""}/'$ipv4_config_key'/{print $4}' < $config_file`
 if [[ $actual_ip != $ip_in_config ]] ; then
 	perl -pi'.old' -e 's/'$ip_in_config'/'$actual_ip'/;' $config_file
-fi
 
-# Restart transmission UI
-transmission_pid=`ps aux | awk '/transmission/ && !/awk/{print $2}'`
-kill $transmission_pid
-while [[ -n "$transmission_pid" ]] ; do
-	sleep 1
-	transmission_pid=`ps aux | awk '/transmission/ && !/awk/{print $2}'`
-done
-transmission-gtk &
+	# Restart transmission UI
+	transmission_pid=`ps aux | awk '/transmission-gtk/ && !/awk/{print $2}'`
+	kill $transmission_pid
+	while [[ -n "$transmission_pid" ]] ; do
+		sleep 1
+		transmission_pid=`ps aux | awk '/transmission-gtk/ && !/awk/{print $2}'`
+	done
+	transmission-gtk &
+fi
