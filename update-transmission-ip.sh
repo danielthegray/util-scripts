@@ -19,7 +19,7 @@ fi
 interface=$1
 actual_ip=`ip addr show $interface | perl -ne 'next if !m/inet /; s/.*inet ([0-9.]+).*/$1/;print'`
 ipv4_config_key='bind-address-ipv4'
-config_file="echo ~/.config/transmission/settings.json"
+config_file=`echo ~/.config/transmission/settings.json`
 ip_in_config=`awk 'BEGIN{FS="\""}/'$ipv4_config_key'/{print $4}' < $config_file`
 if [[ $actual_ip != $ip_in_config ]] ; then
 	perl -pi'.old' -e 's/'$ip_in_config'/'$actual_ip'/;' $config_file
