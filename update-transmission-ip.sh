@@ -31,7 +31,12 @@ if [[ $actual_ip != $ip_in_config ]] ; then
 	done
 
 	# Replace new IP address in config file
-	perl -pi'.old' -e 's/'$ip_in_config'/'$actual_ip'/;' $config_file
+	perl -pi'.old' -e 's/"'$ipv4_config_key'": ".*",/"'$ipv4_config_key'": "'$actual_ip'",/;' $config_file
 	# Start transmission again
+	transmission-gtk &
+fi
+
+transmission_pid=`ps aux | awk '/transmission-gtk/ && !/awk/{print $2}'`
+if [[ -z "$transmission_pid" ]] ; then
 	transmission-gtk &
 fi
