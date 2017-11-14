@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+
+set timeout 20
+set hostname 10.0.0.2
+set username admin
+set password poner_aqui_el_password_del_router
+spawn telnet $hostname
+expect -re "Username"
+send "$username\r"
+expect -re "Password"
+send "$password\r"
+expect -ex "$"
+send "reboot\r"
+exec sleep 1
